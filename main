@@ -1,0 +1,183 @@
+function tl(e) {
+            for (var t = [], a = arguments.length - 1; a-- > 0; )
+                t[a] = arguments[a + 1];
+            return tv(e, t)
+        }
+        function tp(e, t) {
+            for (var a = [], r = arguments.length - 2; r-- > 0; )
+                a[r] = arguments[r + 2];
+            return tv(t, a, e)
+        }
+        function tg(e) {
+            for (var t = [], a = arguments.length - 1; a-- > 0; )
+                t[a] = arguments[a + 1];
+            return ty(e, t)
+        }
+        function tm(e, t) {
+            for (var a = [], r = arguments.length - 2; r-- > 0; )
+                a[r] = arguments[r + 2];
+            return ty(t, a, e)
+        }
+        function ty(e, t, a) {
+            return tv(e, t, function e(t, r, n) {
+                var i, c;
+                return e4(t) && e4(r) && (i = ee(t),
+                c = ee(r),
+                O(i) === O(c) && A(i) === A(c)) ? tv(t, [r], e) : a ? a(t, r, n) : r
+            })
+        }
+        function tv(e, t, a) {
+            if (!e4(e))
+                throw TypeError("Cannot merge into non-data-structure value: " + e);
+            if (U(e))
+                return "function" == typeof a && e.mergeWith ? e.mergeWith.apply(e, [a].concat(t)) : e.merge ? e.merge.apply(e, t) : e.concat.apply(e, t);
+            for (var r = Array.isArray(e), n = e, i = r ? T : P, c = r ? function(t) {
+                n === e && (n = te(n)),
+                n.push(t)
+            }
+            : function(t, r) {
+                var i = Y.call(n, r)
+                  , c = i && a ? a(n[r], t, r) : t;
+                i && c === n[r] || (n === e && (n = te(n)),
+                n[r] = c)
+            }
+            , f = 0; f < t.length; f++)
+                i(t[f]).forEach(c);
+            return n
+        }
+        function t_() {
+            for (var e = [], t = arguments.length; t--; )
+                e[t] = arguments[t];
+            return ty(this, e)
+        }
+        function tw(e) {
+            for (var t = [], a = arguments.length - 1; a-- > 0; )
+                t[a] = arguments[a + 1];
+            return ty(this, t, e)
+        }
+        function tM(e) {
+            for (var t = [], a = arguments.length - 1; a-- > 0; )
+                t[a] = arguments[a + 1];
+            return tr(this, e, tU(), function(e) {
+                return tv(e, t)
+            })
+        }
+        function tk(e) {
+            for (var t = [], a = arguments.length - 1; a-- > 0; )
+                t[a] = arguments[a + 1];
+            return tr(this, e, tU(), function(e) {
+                return ty(e, t)
+            })
+        }
+        function tE(e) {
+            var t = this.asMutable();
+            return e(t),
+            t.wasAltered() ? t.__ensureOwner(this.__ownerID) : this
+        }
+        function tS() {
+            return this.__ownerID ? this : this.__ensureOwner(new m)
+        }
+        function tx() {
+            return this.__ensureOwner()
+        }
+        function tA() {
+            return this.__altered
+        }
+        var tI = function(e) {
+            function t(t) {
+                return null == t ? tU() : eb(t) && !q(t) ? t : tU().withMutations(function(a) {
+                    var r = e(t);
+                    e2(r.size),
+                    r.forEach(function(e, t) {
+                        return a.set(t, e)
+                    })
+                })
+            }
+            return e && (t.__proto__ = e),
+            t.prototype = Object.create(e && e.prototype),
+            t.prototype.constructor = t,
+            t.of = function() {
+                for (var e = [], t = arguments.length; t--; )
+                    e[t] = arguments[t];
+                return tU().withMutations(function(t) {
+                    for (var a = 0; a < e.length; a += 2) {
+                        if (a + 1 >= e.length)
+                            throw Error("Missing value for key: " + e[a]);
+                        t.set(e[a], e[a + 1])
+                    }
+                })
+            }
+            ,
+            t.prototype.toString = function() {
+                return this.__toString("Map {", "}")
+            }
+            ,
+            t.prototype.get = function(e, t) {
+                return this._root ? this._root.get(0, void 0, e, t) : t
+            }
+            ,
+            t.prototype.set = function(e, t) {
+                return tj(this, e, t)
+            }
+            ,
+            t.prototype.remove = function(e) {
+                return tj(this, e, l)
+            }
+            ,
+            t.prototype.deleteAll = function(e) {
+                var t = R(e);
+                return 0 === t.size ? this : this.withMutations(function(e) {
+                    t.forEach(function(t) {
+                        return e.remove(t)
+                    })
+                })
+            }
+            ,
+            t.prototype.clear = function() {
+                return 0 === this.size ? this : this.__ownerID ? (this.size = 0,
+                this._root = null,
+                this.__hash = void 0,
+                this.__altered = !0,
+                this) : tU()
+            }
+            ,
+            t.prototype.sort = function(e) {
+                return t9(eQ(this, e))
+            }
+            ,
+            t.prototype.sortBy = function(e, t) {
+                return t9(eQ(this, t, e))
+            }
+            ,
+            t.prototype.map = function(e, t) {
+                var a = this;
+                return this.withMutations(function(r) {
+                    r.forEach(function(n, i) {
+                        r.set(i, e.call(t, n, i, a))
+                    })
+                })
+            }
+            ,
+            t.prototype.__iterator = function(e, t) {
+                return new tz(this,e,t)
+            }
+            ,
+            t.prototype.__iterate = function(e, t) {
+                var a = this
+                  , r = 0;
+                return this._root && this._root.iterate(function(t) {
+                    return r++,
+                    e(t[1], t[0], a)
+                }, t),
+                r
+            }
+            ,
+            t.prototype.__ensureOwner = function(e) {
+                return e === this.__ownerID ? this : e ? tF(this.size, this._root, e, this.__hash) : 0 === this.size ? tU() : (this.__ownerID = e,
+                this.__altered = !1,
+                this)
+            }
+            ,
+            t
+        }(P);
+        tI.isMap = eb;
